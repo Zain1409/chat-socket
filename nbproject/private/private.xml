@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/F:/Zain/workspace/ChatApp/src/view/PortChat.java</file>
+            <file>file:/F:/Zain/workspace/ChatApp/src/view/Login.java</file>
+            <file>file:/F:/Zain/workspace/ChatApp/src/server/ClientHandler.java</file>
+            <file>file:/F:/Zain/workspace/ChatApp/src/security/EncodeAES.java</file>
+            <file>file:/F:/Zain/workspace/ChatApp/src/connect/ConnectDB.java</file>
+            <file>file:/F:/Zain/workspace/ChatApp/src/view/ClientView.java</file>
+            <file>file:/F:/Zain/workspace/ChatApp/src/server/Server.java</file>
+            <file>file:/F:/Zain/workspace/ChatApp/src/entity/Message.java</file>
+        </group>
+    </open-files>
+</project-private>
