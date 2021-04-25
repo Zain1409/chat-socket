@@ -24,6 +24,10 @@ public class Acount {
         this.status = status;
     }
 
+    public Acount() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public int getId() {
         return id;
     }
@@ -62,6 +66,11 @@ public class Acount {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return this.getUsername()+": " + this.getPassword();
     }
     
     

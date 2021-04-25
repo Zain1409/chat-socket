@@ -251,14 +251,13 @@ public class ClientView extends javax.swing.JFrame {
                 System.out.println("Message: " + message);
                 if (message.equals("EXIT!")) {
                     String s1 = "đã rời khỏi phòng chat!";
-                    jtanoidung.append(username + " " + s1 + "\n");
+                    jtanoidung.append(username.trim() + " " + s1.trim() + "\n");
                 } else if (message.equals("JOIN!")) {
                     String s1 = "đã tham gia phòng chat!";
-                    jtanoidung.append(username + " " + s1 + "\n");
+                    jtanoidung.append(username.trim() + " " + s1.trim() + "\n");
                 } else {
                     if (name.equals(username)) {
                         jtanoidung.append("Me: " + message + "\n");
-
                     } else {
                         jtanoidung.append(username + ": " + message + "\n");
                         jtanoidung.setToolTipText(username);

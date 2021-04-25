@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import security.EncodeAES;
+import server.Server;
 import static view.ClientView.client;
 
 /**
@@ -35,6 +36,8 @@ public class PortChat extends javax.swing.JFrame {
     public static int port;
     private ClientView clientView = new ClientView();
     private EncodeAES encodeAES = new EncodeAES();
+    Server server = new Server();
+
     public PortChat() {
         initComponents();
 
@@ -112,31 +115,18 @@ public class PortChat extends javax.swing.JFrame {
 
     private void btn_okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_okActionPerformed
         // TODO add your handling code here:
-        try {
-            PreparedStatement ps = conn.prepareStatement("update tbl_user set port=?,status=? where id=?");
-            String s = cb_port.getSelectedItem().toString();
-            int port = Integer.parseInt(s);
-            int id = login.acount.getId();
-            String username = login.acount.getUsername();
-            String password = login.acount.getPassword();
-            ps.setInt(1, port);
-            ps.setInt(2, 1);
-            ps.setInt(3, id);
-            ps.executeUpdate();
-
-            login.acount = new Acount(id, username, password, port, 1);
-            
-            String smg = encodeAES.encrypt("JOIN!");
-            String name = encodeAES.encrypt(username);
-            clientView.send(name, smg);
-            
-            this.setVisible(false);
-            ClientView client = new ClientView();
-            client.setLocationRelativeTo(null);
-            client.setVisible(true);
-        } catch (SQLException ex) {
-            Logger.getLogger(PortChat.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        String s = cb_port.getSelectedItem().toString();
+        int port = Integer.parseInt(s);
+        int id = login.acount.getId();
+        login.acount = server.portChart(port, id);
+        String smg = encodeAES.encrypt("JOIN!");
+        String name = encodeAES.encrypt(login.acount.getUsername());
+        clientView.send(name, smg);
+        dispose();
+        this.setVisible(false);
+        ClientView client = new ClientView();
+        client.setLocationRelativeTo(null);
+        client.setVisible(true);
     }//GEN-LAST:event_btn_okActionPerformed
 
     /**

@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import server.Server;
 
 /**
  *
@@ -30,6 +31,7 @@ public class Login extends javax.swing.JFrame {
     public static Acount acount;
     ConnectDB connect = new ConnectDB();
     Connection conn = connect.connect();
+    Server server = new Server();
 
     public Login() {
         initComponents();
@@ -171,41 +173,23 @@ public class Login extends javax.swing.JFrame {
         } else {
             String username = txt_username.getText();
             String password = txt_password.getText();
-            try {
-                PreparedStatement ps = conn.prepareStatement("select id,username,"
-                        + "password, port, status from tbl_user where username=? and password=?");
-                ps.setString(1, username);
-                ps.setString(2, password);
-                ResultSet rs = ps.executeQuery();
-                if (rs.next()) {
-                    //dispose();
-                    this.setVisible(false);
-                    int id = rs.getInt(1);
-                    String name = rs.getString(2);
-                    String pass = rs.getString(3);
-                    int port = rs.getInt(4);
-                    int status = rs.getInt(5);
-                    acount = new Acount(id, username, password, port, status);
-//                    ClientView client = new ClientView();
-//                    client.setLocationRelativeTo(null);
-//                    client.setVisible(true);
-                    if (acount.getStatus() == 1) {
-                        dispose();
-                        ClientView client = new ClientView();
-                        client.setLocationRelativeTo(null);
-                        client.setVisible(true);
-                    } else {
-                        PortChat port_chat = new PortChat();
-                        port_chat.setLocationRelativeTo(null);
-                        port_chat.setVisible(true);
-                    }
+            System.out.println("login");
+            acount = server.login(username, password);
+            System.out.println(acount.toString());
+            if (acount != null) {
+                if (acount.getStatus() == 1) {
+                    dispose();
+                    ClientView client = new ClientView();
+                    client.setLocationRelativeTo(null);
+                    client.setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Wrong username or password!");
+                    PortChat port_chat = new PortChat();
+                    port_chat.setLocationRelativeTo(null);
+                    port_chat.setVisible(true);
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            } else {
+                JOptionPane.showMessageDialog(this, "Wrong username or password!");
             }
-
         }
     }//GEN-LAST:event_btn_loginActionPerformed
 
@@ -219,36 +203,22 @@ public class Login extends javax.swing.JFrame {
             } else {
                 String username = txt_username.getText();
                 String password = txt_password.getText();
-                try {
-                    PreparedStatement ps = conn.prepareStatement("select id,username,"
-                            + "password, port, status from tbl_user where username=? and password=?");
-                    ps.setString(1, username);
-                    ps.setString(2, password);
-                    ResultSet rs = ps.executeQuery();
-                    if (rs.next()) {
-                        //dispose();
+                acount = server.login(username, password);
+                if (acount != null) {
+                    if (acount.getStatus() == 1) {
+                        dispose();
                         this.setVisible(false);
-                        int id = rs.getInt(1);
-                        String name = rs.getString(2);
-                        String pass = rs.getString(3);
-                        int port = rs.getInt(4);
-                        int status = rs.getInt(5);
-                        acount = new Acount(id, username, password, port, status);
-                        if (acount.getStatus() == 1) {
-                            dispose();
-                            ClientView client = new ClientView();
-                            client.setLocationRelativeTo(null);
-                            client.setVisible(true);
-                        } else {
-                            PortChat port_chat = new PortChat();
-                            port_chat.setLocationRelativeTo(null);
-                            port_chat.setVisible(true);
-                        }
+                        ClientView client = new ClientView();
+                        client.setLocationRelativeTo(null);
+                        client.setVisible(true);
                     } else {
-                        JOptionPane.showMessageDialog(this, "Wrong username or password!");
+                        this.setVisible(false);
+                        PortChat port_chat = new PortChat();
+                        port_chat.setLocationRelativeTo(null);
+                        port_chat.setVisible(true);
                     }
-                } catch (SQLException ex) {
-                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Wrong username or password!");
                 }
             }
         }
